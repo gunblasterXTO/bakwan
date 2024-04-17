@@ -1,3 +1,4 @@
+import 'package:bakwan/common/style/theme.dart';
 import 'package:bakwan/routes/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: true,
         getPages: AppPages.routes,
         initialRoute: AppPages.initial,
+        theme: ThemeClass.lightTheme,
       ),
     );
   }
