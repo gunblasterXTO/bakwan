@@ -23,6 +23,8 @@ class CustomChip extends StatelessWidget {
       ),
       child: Text(
         text,
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
         style: context.textTheme.bodyMedium!.copyWith(
           color: UIConst.white,
         ),
