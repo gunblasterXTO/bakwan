@@ -9,7 +9,10 @@ class Splashscreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 1), () => Get.offNamed(Routes.home));
+    Future.delayed(
+      const Duration(seconds: 1),
+      () => Get.offNamed(Routes.journal),
+    );
 
     return Scaffold(
       backgroundColor: UIConst.primaryColor,
