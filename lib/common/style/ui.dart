@@ -7,6 +7,8 @@ class UIConst {
   static Color primaryColor = const Color.fromRGBO(0, 71, 27, 1.0);
   static Color secondaryColor = const Color.fromRGBO(240, 235, 219, 1.0);
   static Color white = Colors.white;
+  static Color hintTextColor = Colors.grey;
+  static Color formValueTextColor = Colors.black;
 
   // Config
   static double appBarHeight = 64.0;
