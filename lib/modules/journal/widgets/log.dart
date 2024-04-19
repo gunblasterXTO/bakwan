@@ -4,15 +4,19 @@ import 'package:flutter/material.dart';
 
 class LogRecord extends StatelessWidget {
   final String mainTag;
+  final Color mainTagColor;
   final String? subTag;
+  final Color? subStagColor;
   final String description;
   final String recordDetail;
   const LogRecord({
     super.key,
     required this.mainTag,
+    required this.mainTagColor,
     required this.description,
     required this.recordDetail,
     this.subTag,
+    this.subStagColor,
   });
 
   @override
@@ -27,14 +31,12 @@ class LogRecord extends StatelessWidget {
             children: [
               CustomChip(
                 text: mainTag,
-                color: UIConst
-                    .primaryColor, // TODO: color will be depends on category settings
+                color: mainTagColor,
               ),
               if (subTag != null)
                 CustomChip(
                   text: subTag!,
-                  color: UIConst
-                      .primaryColor, // TODO: color will be depends on category settings
+                  color: subStagColor!,
                 ),
             ],
           ),
