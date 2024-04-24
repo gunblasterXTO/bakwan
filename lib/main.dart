@@ -1,11 +1,13 @@
 import 'package:bakwan/common/style/theme.dart';
+import 'package:bakwan/database/instance.dart';
 import 'package:bakwan/routes/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Get.put(DBInstance());
   runApp(const MyApp());
 }
 
