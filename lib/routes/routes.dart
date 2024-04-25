@@ -5,5 +5,5 @@ abstract class Routes {
 
   static const index = "/";
   static const journal = "/journal";
-  static const newActivity = "/activity/new";
+  static const activity = "/activity";
 }
