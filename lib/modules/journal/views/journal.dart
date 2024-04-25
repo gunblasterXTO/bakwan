@@ -40,17 +40,13 @@ class JournalPage extends StatelessWidget {
               ),
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                  color: Colors.white, // Background color
+                  border: Border.all(
+                    color: UIConst.borderGreyColor,
+                  ),
                   borderRadius: BorderRadius.circular(
                     UIConst.standardRad * 2,
                   ), // Rounded corners
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2), // Shadow color
-                      blurRadius: 20, // Shadow blur radius
-                      offset: const Offset(0, 5), // Shadow offset
-                    ),
-                  ],
+                  color: Colors.white, // Background color
                 ),
                 child: TabBar(
                   indicator: BoxDecoration(
@@ -90,6 +86,7 @@ class JournalPage extends StatelessWidget {
         floatingActionButton: SpeedDial(
           icon: Icons.add,
           activeIcon: Icons.close,
+          elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(UIConst.standardRad * 2),
           ),
@@ -106,7 +103,7 @@ class JournalPage extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(UIConst.standardRad * 2),
               ),
-              onTap: () => Get.toNamed(Routes.newActivity),
+              onTap: () => Get.toNamed(Routes.activity, arguments: {}),
             ),
             SpeedDialChild(
               child: const Icon(Icons.attach_money),
