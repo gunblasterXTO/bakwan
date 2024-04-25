@@ -2,7 +2,6 @@ import 'package:bakwan/common/style/ui.dart';
 import 'package:bakwan/routes/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Splashscreen extends StatelessWidget {
   const Splashscreen({super.key});
@@ -24,13 +23,6 @@ class Splashscreen extends StatelessWidget {
               "assets/images/bakwan.png",
               width: 200,
               height: 200,
-            ),
-            Text(
-              "Bakwan",
-              style: GoogleFonts.raleway(
-                color: UIConst.secondaryColor,
-                fontSize: 24,
-              ),
             ),
           ],
         ),
