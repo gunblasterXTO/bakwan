@@ -1,17 +1,24 @@
 import 'package:bakwan/common/style/ui.dart';
 import 'package:bakwan/common/widgets/button.dart';
 import 'package:bakwan/common/widgets/form.dart';
-import 'package:bakwan/modules/journal/controllers/new_activity_controller.dart';
+import 'package:bakwan/database/instance.dart';
+import 'package:bakwan/modules/journal/controllers/activity_controller.dart';
+import 'package:bakwan/modules/journal/models/category.dart';
 import 'package:bakwan/modules/journal/widgets/form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class NewActivityPage extends StatelessWidget {
-  const NewActivityPage({super.key});
+class ActivityFormPage extends StatelessWidget {
+  const ActivityFormPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final NewActivityController c = Get.put(NewActivityController());
+    final ActivityController c = Get.put(
+      ActivityController(
+        id: Get.arguments["id"],
+        db: Get.find<DBInstance>().database,
+      ),
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -37,28 +44,32 @@ class NewActivityPage extends StatelessWidget {
                   key: c.newActivityKey,
                   child: Column(
                     children: [
-                      CustomDropDownForm(
-                        label: "Category",
-                        hint: "Select category",
-                        itemArray: const [
-                          // TODO: update with actual data
-                          "test",
-                          "train",
-                        ],
-                        state: c.state.category,
+                      CustomFreeTextForm(
+                        label: "Title",
+                        hint: "Write activity title",
+                        state: c.state.title,
+                        maxLines: 1,
                       ),
                       SizedBox(
                         height: UIConst.standardGapHeight * 2,
                       ),
-                      CustomDropDownForm(
+                      CustomDropDownForm<CategoryModel>(
+                        label: "Category",
+                        hint: "Select category",
+                        noDataHint: "No category available",
+                        itemArray: c.getAllCategories(),
+                        state: c.state.categoryId,
+                      ),
+                      SizedBox(
+                        height: UIConst.standardGapHeight * 2,
+                      ),
+                      CustomDropDownForm<CategoryModel>(
                         label: "Sub Category",
                         hint: "Select sub category",
-                        itemArray: const [
-                          // TODO: update with actual data
-                          "test",
-                          "train",
-                        ],
-                        state: c.state.subCategory,
+                        noDataHint: "No sub category available",
+                        itemArray: c
+                            .getAllCategories(), // TODO: replace 1 with the selected category
+                        state: c.state.subCategoryId,
                       ),
                       SizedBox(
                         height: UIConst.standardGapHeight * 2,
@@ -70,7 +81,7 @@ class NewActivityPage extends StatelessWidget {
                             label: "Start time",
                             hint: "Select start time",
                             state: c.state.startTime,
-                            onChange: c.timeOfDaytoString,
+                            onChange: c.formatDisplayTime,
                           ),
                           const Expanded(
                             flex: 1,
@@ -81,7 +92,7 @@ class NewActivityPage extends StatelessWidget {
                             label: "End time",
                             hint: "Select end time",
                             state: c.state.endTime,
-                            onChange: c.timeOfDaytoString,
+                            onChange: c.formatDisplayTime,
                           ),
                         ],
                       ),
@@ -103,11 +114,14 @@ class NewActivityPage extends StatelessWidget {
                 PrimaryConfirmationButton(
                   label: "Save",
                   onPressed: () {
-                    print(c.state.category);
-                    print(c.state.subCategory);
-                    print(c.state.startTime);
-                    print(c.state.endTime);
-                    print(c.state.description);
+                    // c.saveActivity(
+                    //   title: c.state.title.value,
+                    //   startTime: c.state.startTime.value,
+                    //   endTime: c.state.endTime.value,
+                    //   description: c.state.description.value,
+                    //   categoryId: c.state.categoryId.value,
+                    //   subCategoryId: c.state.subCategoryId.value,
+                    // );
                   },
                 ),
               ],
