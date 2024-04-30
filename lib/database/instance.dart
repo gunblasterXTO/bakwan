@@ -8,7 +8,7 @@ import 'package:sqflite/sqflite.dart';
 
 class DBInstance extends GetxController {
   final String _dbName = "bakwan.db";
-  final int _dbVersion = 1;
+  final int _dbVersion = 4;
   late Database _database;
 
   Database get database => _database;
@@ -26,8 +26,8 @@ class DBInstance extends GetxController {
       path,
       version: _dbVersion,
       onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
     );
-    print(path);
   }
 
   Future _onCreate(Database db, int version) async {
@@ -35,5 +35,18 @@ class DBInstance extends GetxController {
     await db.execute(SubCategoryTable.createTableQuery);
     await db.execute(ActivityTable.createTableQuery);
     await db.execute(ExpenseTable.createTableQuery);
+  }
+
+  // TODO: this needs to be maintained manually?
+  Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < _dbVersion) {
+      db.execute(CategoryTable.dropTableQuery);
+      db.execute(CategoryTable.createTableQuery);
+      db.rawInsert(CategoryTable.insertQuery);
+
+      db.execute(SubCategoryTable.dropTableQuery);
+      db.execute(SubCategoryTable.createTableQuery);
+      db.rawInsert(SubCategoryTable.insertQuery);
+    }
   }
 }
