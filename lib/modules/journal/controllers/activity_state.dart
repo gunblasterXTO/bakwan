@@ -1,37 +1,36 @@
 import 'package:get/get.dart';
 
 class ActivityState {
-  RxString title = ''.obs;
-  RxString category = ''.obs;
-  RxString subCategory = ''.obs;
-  RxString startTime = ''.obs;
-  RxString endTime = ''.obs;
-  RxString description = ''.obs;
+  RxString title;
+  RxString startTime;
+  RxString endTime;
+  RxInt categoryId;
+  RxInt subCategoryId;
+  RxString description;
+
+  ActivityState({
+    required this.title,
+    required this.startTime,
+    required this.endTime,
+    required this.categoryId,
+    required this.subCategoryId,
+    required this.description,
+  }) {
+    title = title;
+    categoryId = categoryId;
+    subCategoryId = subCategoryId;
+    startTime = startTime;
+    endTime = endTime;
+    description = description;
+  }
 
   // Constructor for initial state with empty strings
-  ActivityState.empty() {
-    title = ''.obs;
-    category = ''.obs;
-    subCategory = ''.obs;
-    startTime = ''.obs;
-    endTime = ''.obs;
-    description = ''.obs;
-  }
-
-  // Constructor with values passed as arguments
-  ActivityState({
-    required String title,
-    required String category,
-    required String subCategory,
-    required String startTime,
-    required String endTime,
-    required String description,
-  }) {
-    this.title = title.obs;
-    this.category = category.obs;
-    this.subCategory = subCategory.obs;
-    this.startTime = startTime.obs;
-    this.endTime = endTime.obs;
-    this.description = description.obs;
-  }
+  factory ActivityState.empty() => ActivityState(
+        title: "".obs,
+        startTime: "".obs,
+        endTime: "".obs,
+        categoryId: 0.obs,
+        subCategoryId: 0.obs,
+        description: "".obs,
+      );
 }

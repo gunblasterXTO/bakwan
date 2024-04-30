@@ -3,6 +3,7 @@ import 'package:bakwan/common/utils/validator.dart';
 import 'package:bakwan/modules/journal/controllers/activity_state.dart';
 import 'package:bakwan/modules/journal/models/activity.dart';
 import 'package:bakwan/modules/journal/models/category.dart';
+import 'package:bakwan/modules/journal/models/sub_category.dart';
 import 'package:bakwan/modules/journal/repository/local.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -118,7 +119,7 @@ class ActivityController extends GetxController {
     return _categoryDao.getAll();
   }
 
-  // Future<List<SubCategoryModel>> getAllSubCategories(int id) {
-  //   return _subCategoryDao.getAllFromCat(id);
-  // }
+  Future<List<SubCategoryModel>> getAllSubCategories(int id) {
+    return _subCategoryDao.getAllFromCat(id);
+  }
 }

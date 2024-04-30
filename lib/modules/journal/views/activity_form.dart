@@ -4,6 +4,7 @@ import 'package:bakwan/common/widgets/form.dart';
 import 'package:bakwan/database/instance.dart';
 import 'package:bakwan/modules/journal/controllers/activity_controller.dart';
 import 'package:bakwan/modules/journal/models/category.dart';
+import 'package:bakwan/modules/journal/models/sub_category.dart';
 import 'package:bakwan/modules/journal/widgets/form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -59,18 +60,23 @@ class ActivityFormPage extends StatelessWidget {
                         noDataHint: "No category available",
                         itemArray: c.getAllCategories(),
                         state: c.state.categoryId,
+                        isDisabled: false,
                       ),
                       SizedBox(
                         height: UIConst.standardGapHeight * 2,
                       ),
-                      CustomDropDownForm<CategoryModel>(
-                        label: "Sub Category",
-                        hint: "Select sub category",
-                        noDataHint: "No sub category available",
-                        itemArray: c
-                            .getAllCategories(), // TODO: replace 1 with the selected category
-                        state: c.state.subCategoryId,
-                      ),
+                      Obx(() {
+                        return CustomDropDownForm<SubCategoryModel>(
+                          label: "Sub Category",
+                          hint: "Select sub category",
+                          noDataHint: "No sub category available",
+                          itemArray: c.getAllSubCategories(
+                            c.state.categoryId.toInt(),
+                          ),
+                          state: c.state.subCategoryId,
+                          isDisabled: c.state.categoryId.toInt() == 0,
+                        );
+                      }),
                       SizedBox(
                         height: UIConst.standardGapHeight * 2,
                       ),
@@ -122,6 +128,12 @@ class ActivityFormPage extends StatelessWidget {
                     //   categoryId: c.state.categoryId.value,
                     //   subCategoryId: c.state.subCategoryId.value,
                     // );
+                    print(c.state.title.value);
+                    print(c.state.startTime.value);
+                    print(c.state.endTime.value);
+                    print(c.state.description.value);
+                    print(c.state.categoryId.value);
+                    print(c.state.subCategoryId.value);
                   },
                 ),
               ],

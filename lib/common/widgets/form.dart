@@ -1,63 +1,82 @@
+import 'package:bakwan/common/models/base.dart';
+import 'package:bakwan/common/style/button.dart';
 import 'package:bakwan/common/style/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CustomDropDownForm extends StatelessWidget {
+class CustomDropDownForm<T extends BaseModel> extends StatelessWidget {
   final String label;
   final String hint;
-  final List<String> itemArray;
-  final RxString state;
+  final String noDataHint;
+  final Future<List<T>> itemArray;
+  final RxInt state;
+  final bool isDisabled;
 
   const CustomDropDownForm({
     super.key,
     required this.label,
     required this.hint,
+    required this.noDataHint,
     required this.itemArray,
     required this.state,
+    required this.isDisabled,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: context.textTheme.bodySmall,
-        ),
-        SizedBox(
-          height: UIConst.standardGapHeight,
-        ),
-        DropdownButtonFormField(
-          value: null,
-          items: itemArray.map((e) {
-            return DropdownMenuItem(
-              value: e,
-              child: Text(
-                e,
-                style: context.textTheme.bodyMedium,
-              ),
-            );
-          }).toList(),
-          onChanged: (value) {
-            state.value = value!;
-          },
-          hint: Text(
-            hint,
-            style: context.textTheme.bodyMedium!.copyWith(
-              color: state.value.isNotEmpty ? Colors.black : Colors.grey,
+    return AbsorbPointer(
+      absorbing: isDisabled,
+      child: Opacity(
+        opacity: isDisabled ? 0.5 : 1.0,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: context.textTheme.bodySmall,
             ),
-          ),
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(UIConst.standardRad),
+            SizedBox(
+              height: UIConst.standardGapHeight,
             ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: UIConst.standardPadding * 2,
+            FutureBuilder<List<T>>(
+              future: itemArray,
+              builder: (context, snapshot) {
+                if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                  return DropdownButtonFormField(
+                    value: null,
+                    items: snapshot.data!.map((e) {
+                      return DropdownMenuItem(
+                        value: e.id,
+                        child: Text(
+                          e.name,
+                          style: context.textTheme.bodyMedium,
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value) => state.value = value!,
+                    hint: Text(
+                      hint,
+                      style: context.textTheme.bodyMedium!.copyWith(
+                        color: state.value == 0 ? Colors.black : Colors.grey,
+                      ),
+                    ),
+                    decoration: dropDownButtonDecoration,
+                    elevation: 0,
+                  );
+                } else {
+                  return DropdownButtonFormField(
+                    value: null,
+                    items: const [],
+                    onChanged: null,
+                    hint: Text(noDataHint),
+                    decoration: dropDownButtonDecoration,
+                  );
+                }
+              },
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
