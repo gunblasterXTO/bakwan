@@ -41,8 +41,7 @@ class CustomTimePicker extends StatelessWidget {
             child: Obx(() {
               return Text(
                 state.value.isNotEmpty ? state.value : hint,
-                textAlign:
-                    state.value.isNotEmpty ? TextAlign.center : TextAlign.start,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   color: state.value.isNotEmpty ? Colors.black : Colors.grey,
                 ),
