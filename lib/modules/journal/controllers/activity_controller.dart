@@ -17,7 +17,7 @@ class ActivityController extends GetxController {
   late final SubCategoryDao _subCategoryDao;
   late final ActivityDao _activityDao;
   late final ActivityState state;
-  late TextEditingController titleController, descriptionController;
+  late TextEditingController titleController;
 
   ActivityController({
     required this.id,
@@ -36,13 +36,11 @@ class ActivityController extends GetxController {
   void onInit() {
     super.onInit();
     titleController = TextEditingController();
-    descriptionController = TextEditingController();
   }
 
   @override
   void onClose() {
     titleController.dispose();
-    descriptionController.dispose();
     super.onClose();
   }
 
@@ -69,13 +67,6 @@ class ActivityController extends GetxController {
   String? validateTitle(String value) {
     if (Validator.isEmptyString(value)) {
       return "Fill in title";
-    }
-    return null;
-  }
-
-  String? validateDescription(String value) {
-    if (Validator.isEmptyString(value)) {
-      return "Fill in description";
     }
     return null;
   }
