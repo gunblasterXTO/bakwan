@@ -16,7 +16,7 @@ class ActivityFormPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ActivityController c = Get.put(
       ActivityController(
-        id: Get.arguments["id"],
+        id: Get.arguments?["id"],
         db: Get.find<DBInstance>().database,
       ),
     );
@@ -43,12 +43,15 @@ class ActivityFormPage extends StatelessWidget {
               children: [
                 Form(
                   key: c.newActivityKey,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
                     children: [
                       CustomFreeTextForm(
                         label: "Title",
                         hint: "Write activity title",
                         state: c.state.title,
+                        controller: c.titleController,
+                        validator: (value) => c.validateTitle(value!),
                         maxLines: 1,
                       ),
                       SizedBox(

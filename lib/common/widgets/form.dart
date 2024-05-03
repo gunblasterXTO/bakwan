@@ -42,7 +42,7 @@ class CustomDropDownForm<T extends BaseModel> extends StatelessWidget {
               future: itemArray,
               builder: (context, snapshot) {
                 if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                  return DropdownButtonFormField(
+                  return DropdownButtonFormField<int>(
                     value: null,
                     items: snapshot.data!.map((e) {
                       return DropdownMenuItem(
@@ -53,7 +53,11 @@ class CustomDropDownForm<T extends BaseModel> extends StatelessWidget {
                         ),
                       );
                     }).toList(),
-                    onChanged: (value) => state.value = value!,
+                    onChanged: isDisabled
+                        ? null
+                        : (value) {
+                            state.value = value!;
+                          },
                     hint: Text(
                       hint,
                       style: context.textTheme.bodyMedium!.copyWith(
@@ -85,12 +89,16 @@ class CustomFreeTextForm extends StatelessWidget {
   final String label;
   final String hint;
   final RxString state;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
   final int? maxLines;
   const CustomFreeTextForm({
     super.key,
     required this.label,
     required this.hint,
     required this.state,
+    this.controller,
+    this.validator,
     this.maxLines,
   });
 
@@ -107,6 +115,8 @@ class CustomFreeTextForm extends StatelessWidget {
           height: UIConst.standardGapHeight,
         ),
         TextFormField(
+          controller: controller,
+          validator: validator,
           onChanged: (value) => state.value = value,
           decoration: InputDecoration(
             border: OutlineInputBorder(
