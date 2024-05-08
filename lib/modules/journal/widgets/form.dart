@@ -6,7 +6,7 @@ class CustomTimePicker extends StatelessWidget {
   final String label;
   final String hint;
   final TextEditingController controller;
-  final String? Function(String?)? validator;
+  final String? Function(String?) validator;
   final RxString state;
   final String Function(TimeOfDay) parser;
   final double width;
@@ -19,7 +19,7 @@ class CustomTimePicker extends StatelessWidget {
     required this.state,
     required this.parser,
     required this.width,
-    this.validator,
+    required this.validator,
   });
 
   @override
@@ -64,6 +64,10 @@ class CustomTimePicker extends StatelessWidget {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(UIConst.standardRad),
                 borderSide: const BorderSide(color: Colors.black),
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: UIConst.standardPadding * 2,
+                vertical: UIConst.standardPadding * 2,
               ),
               hintText: hint,
               hintStyle: context.textTheme.bodyMedium!

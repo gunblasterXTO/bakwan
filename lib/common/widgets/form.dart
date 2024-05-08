@@ -122,6 +122,10 @@ class CustomFreeTextForm extends StatelessWidget {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(UIConst.standardRad),
             ),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: UIConst.standardPadding * 2,
+              vertical: UIConst.standardPadding * 2,
+            ),
             hintText: hint,
             hintStyle: context.textTheme.bodyMedium!.copyWith(
               color: UIConst.hintTextColor,

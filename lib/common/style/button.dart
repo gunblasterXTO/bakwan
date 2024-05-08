@@ -8,5 +8,6 @@ final InputDecoration dropDownButtonDecoration = InputDecoration(
   ),
   contentPadding: EdgeInsets.symmetric(
     horizontal: UIConst.standardPadding * 2,
+    vertical: UIConst.standardPadding * 2,
   ),
 );
