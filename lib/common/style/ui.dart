@@ -9,6 +9,12 @@ class UIConst {
   static Color white = Colors.white;
   static Color hintTextColor = Colors.grey;
   static Color formValueTextColor = Colors.black;
+  static Color borderGreyColor = Colors.grey.withOpacity(0.3);
+  static Color errorWidgetBackground = const Color.fromARGB(255, 255, 130, 130);
+  static Color errorWidgetText = Colors.white;
+
+  // Time
+  static int pageTransitionDuration = 200; // milliseconds
 
   // Config
   static double appBarHeight = 64.0;
