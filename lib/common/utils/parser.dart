@@ -12,10 +12,9 @@ class Parser {
   }
 
   static String timeOfDaytoString(TimeOfDay value) {
-    final period = value.period == DayPeriod.am ? "AM" : "PM";
-    final hour = value.hourOfPeriod;
+    final hour = value.hour;
     final minute = value.minute;
 
-    return "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')} $period";
+    return "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}";
   }
 }
