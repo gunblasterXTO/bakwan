@@ -103,6 +103,7 @@ class JournalPage extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(UIConst.standardRad * 2),
               ),
+              elevation: 0,
               onTap: () => Get.toNamed(Routes.activity, arguments: {}),
             ),
             SpeedDialChild(
@@ -111,6 +112,7 @@ class JournalPage extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(UIConst.standardRad * 2),
               ),
+              elevation: 0,
             ),
           ],
         ),

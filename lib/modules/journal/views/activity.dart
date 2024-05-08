@@ -40,7 +40,6 @@ class ActivityPage extends StatelessWidget {
                     Divider(
                       color: Colors.grey.withOpacity(0.5),
                       thickness: 1.0,
-                      // height: 0.0,
                     ),
                   ],
                 ),
