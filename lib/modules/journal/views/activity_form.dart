@@ -42,7 +42,7 @@ class ActivityFormPage extends StatelessWidget {
             child: Column(
               children: [
                 Form(
-                  key: c.newActivityKey,
+                  key: c.activityKey,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
                     children: [
@@ -86,11 +86,16 @@ class ActivityFormPage extends StatelessWidget {
                       Row(
                         children: [
                           CustomTimePicker(
-                            width: MediaQuery.of(context).size.width * 0.4,
                             label: "Start time",
                             hint: "Select start time",
+                            controller: c.startTimeController,
+                            validator: (value) => c.validateStartEndTime(
+                              value!,
+                              c.state.endTime.value,
+                            ),
                             state: c.state.startTime,
-                            onChange: c.formatDisplayTime,
+                            parser: c.formatDisplayTime,
+                            width: MediaQuery.of(context).size.width * 0.4,
                           ),
                           const Expanded(
                             flex: 1,
@@ -100,8 +105,13 @@ class ActivityFormPage extends StatelessWidget {
                             width: MediaQuery.of(context).size.width * 0.4,
                             label: "End time",
                             hint: "Select end time",
+                            controller: c.endTimeController,
+                            validator: (value) => c.validateStartEndTime(
+                              c.state.startTime.value,
+                              value!,
+                            ),
                             state: c.state.endTime,
-                            onChange: c.formatDisplayTime,
+                            parser: c.formatDisplayTime,
                           ),
                         ],
                       ),
@@ -123,20 +133,14 @@ class ActivityFormPage extends StatelessWidget {
                 PrimaryConfirmationButton(
                   label: "Save",
                   onPressed: () {
-                    // c.saveActivity(
-                    //   title: c.state.title.value,
-                    //   startTime: c.state.startTime.value,
-                    //   endTime: c.state.endTime.value,
-                    //   description: c.state.description.value,
-                    //   categoryId: c.state.categoryId.value,
-                    //   subCategoryId: c.state.subCategoryId.value,
-                    // );
-                    print(c.state.title.value);
-                    print(c.state.startTime.value);
-                    print(c.state.endTime.value);
-                    print(c.state.description.value);
-                    print(c.state.categoryId.value);
-                    print(c.state.subCategoryId.value);
+                    c.saveActivity(
+                      title: c.state.title.value,
+                      startTime: c.state.startTime.value,
+                      endTime: c.state.endTime.value,
+                      description: c.state.description.value,
+                      categoryId: c.state.categoryId.value,
+                      subCategoryId: c.state.subCategoryId.value,
+                    );
                   },
                 ),
               ],

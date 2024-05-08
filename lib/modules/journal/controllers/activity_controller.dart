@@ -1,16 +1,18 @@
 import 'package:bakwan/common/utils/parser.dart';
 import 'package:bakwan/common/utils/validator.dart';
+import 'package:bakwan/common/widgets/snackbar.dart';
 import 'package:bakwan/modules/journal/controllers/activity_state.dart';
 import 'package:bakwan/modules/journal/models/activity.dart';
 import 'package:bakwan/modules/journal/models/category.dart';
 import 'package:bakwan/modules/journal/models/sub_category.dart';
 import 'package:bakwan/modules/journal/repository/local.dart';
+import 'package:bakwan/routes/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ActivityController extends GetxController {
-  final GlobalKey<FormState> newActivityKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> activityKey = GlobalKey<FormState>();
   final int? id;
   final Database db;
   late final CategoryDao _categoryDao;
@@ -18,6 +20,8 @@ class ActivityController extends GetxController {
   late final ActivityDao _activityDao;
   late final ActivityState state;
   late TextEditingController titleController;
+  late TextEditingController startTimeController;
+  late TextEditingController endTimeController;
 
   ActivityController({
     required this.id,
@@ -36,11 +40,15 @@ class ActivityController extends GetxController {
   void onInit() {
     super.onInit();
     titleController = TextEditingController();
+    startTimeController = TextEditingController();
+    endTimeController = TextEditingController();
   }
 
   @override
   void onClose() {
     titleController.dispose();
+    startTimeController.dispose();
+    endTimeController.dispose();
     super.onClose();
   }
 
@@ -58,10 +66,20 @@ class ActivityController extends GetxController {
       startTime: startTime,
       endTime: endTime,
       description: description,
-      categoryId: categoryId,
-      subCategoryId: subCategoryId,
+      categoryId: categoryId == 0 ? null : categoryId,
+      subCategoryId: subCategoryId == 0 ? null : subCategoryId,
     );
-    _activityDao.upsertRecord(activityModel);
+    final isValid = activityKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+
+    try {
+      _activityDao.upsertRecord(activityModel);
+      Get.offAllNamed(Routes.journal);
+    } catch (e) {
+      errorSnackBar("Operation failure", e.toString());
+    }
   }
 
   String? validateTitle(String value) {
@@ -72,6 +90,10 @@ class ActivityController extends GetxController {
   }
 
   String? validateStartEndTime(String startValue, String endValue) {
+    if (startValue.isEmpty || endValue.isEmpty) {
+      return "Time is empty";
+    }
+
     Map<String, int> startValueSplitted = Parser.timeToDict(startValue);
     Map<String, int> endValueSplitted = Parser.timeToDict(endValue);
 
@@ -94,9 +116,8 @@ class ActivityController extends GetxController {
     );
 
     int comparison = startDateTime.compareTo(endDateTime);
-
-    if (comparison > 0) {
-      return "Start time has to be earlier than end time";
+    if (comparison >= 0) {
+      return "Time not match";
     }
 
     return null;

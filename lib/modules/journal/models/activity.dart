@@ -29,3 +29,23 @@ class ActivityModel extends BaseModel {
     );
   }
 }
+
+class UpsertActivityModel {
+  String title;
+  String startTime;
+  String endTime;
+  int? id;
+  int? categoryId;
+  int? subCategoryId;
+  String? description;
+
+  UpsertActivityModel({
+    required this.title,
+    required this.startTime,
+    required this.endTime,
+    this.id,
+    this.categoryId,
+    this.subCategoryId,
+    this.description,
+  });
+}
